@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-15">
+
+<title>Home</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>
+	<h1>Home Page</h1>
+	<p th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
+
+	<nav>
+		
+		<a th:href="@{/GetVendo}">Vendo</a></li>
+		
+		 <a th:href="@{/GetAcquisto}">Acquisto</a></li>
+		
+	</nav>
+</body>
+</html>

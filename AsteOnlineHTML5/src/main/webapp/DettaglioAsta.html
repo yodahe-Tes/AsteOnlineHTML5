@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-15">
+<title>Dettaglio Asta</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+		<div >
+		<a th:href="@{/Home}">Homepage</a>  <a th:href="@{/GetVendo}">Vendo</a>
+	</div>
+	
+	<h2>Dettaglio Asta</h2>
+	
+	
+	<div th:if="${detAsta.isOpen()}">
+	
+	<table class="tableArrangement">
+		<thead>
+			<tr>
+				<th>Codice             </th>
+				<th>Nome Articolo      </th>
+				<th>Descrizione        </th>
+				<th>Prezzo Iniziale    </th>
+				<th>Rialzo Minimo      </th>
+				<th>Scadenza           </th>
+				<th>Immagine           </th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="d : ${detAsta}">
+				<td th:text="${d.codice}"></td>
+				<td th:text="${d.nome}"></td>
+				<td th:text="${d.descrizione}"></td>
+				<td><span th:text="${#numbers.formatDecimal(d.prezzoIniziale, 0, 'COMMA', 2, 'POINT')}"></span> €</td>
+				<td><span th:text="${#numbers.formatDecimal(d.rialzoMinimo, 0, 'COMMA', 2, 'POINT')}"></span> €</td>
+				<td th:text="${#dates.format(d.scadenza, 'yyyy-MM-dd HH:mm')}"></td>
+				<td ><img th:src="${'data:image/jpeg;base64,' + detAsta.image}" width="100" height="100"/>
+		
+			</tr>
+		</tbody>
+	</table>
+	
+	
+	<table class="tableArrangement">
+		<thead>
+			<tr>
+				<th>nome Offerente   </th>
+				<th>Prezzo Offerto   </th>
+				<th>Data Offerta     </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="o : ${offerte}"            >
+				<td th:text="${o.nomeOfferente}"    ></td>
+				<td><span th:text="${#numbers.formatDecimal(o.ammontareOfferta, 0, 'COMMA', 2, 'POINT')}"></span> €</td>
+				<td th:text="${#dates.format(o.dataOraOfferta, 'yyyy-MM-dd HH:mm')}"  ></td>
+			</tr>
+		</tbody>
+	</table>
+	
+		<div th:if="${currTime} > ${detAsta.scadenza}">	
+			<form th:action="@{/ChiudiAsta}" method="POST">
+			<input type="hidden" name="idAsta" th:value="${detAsta.idAsta}">
+			<input type="hidden" name="offerte" th:value="${offerte}">
+			<button type="submit" name="action" value="Close">Chiudi Asta</button>
+		</form>
+		</div>
+	</div>
+
+	<div th:if="${detAsta.isClosed()}">
+		<h2>ASTE CHIUSE</h2>
+	
+	<table class="tableArrangement">
+		<thead>
+			<tr>
+				<th>Codice           </th>
+				<th>Nome Articolo    </th>
+				<th>Prezzo Aggiudica </th>
+				<th>Nome Aggiudicatario</th>
+				<th>Indirizzo di Spedizione</th>
+				</tr>
+		</thead>
+		<tbody>
+			<tr th:each="d : ${detAstaCs}"    >
+				<td th:text="${d.codice}"     ></td>
+				<td th:text="${d.nome}"       ></td>
+				<td><span th:text="${#numbers.formatDecimal(d.prezzoAggiudica, 0, 'COMMA', 2, 'POINT')}"></span> €</td>
+				<td th:text="${vincitoreAsta.name}" ></td>
+				<td th:text="${ vincitoreAsta.indirizzo}"></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+		
+</body>
+</html>

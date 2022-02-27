@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-15">
+<title>Vendo</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+
+<body>
+	<div >
+		<a th:href="@{/Home}">Homepage</a> 	</div><div align="right"><a th:href="@{/Logout}">Logout</a>
+	</div>
+	<h2>ASTE APERTE</h2>
+	<div>
+	<table class="tableArrangement">
+		<thead>
+			<tr>
+				<th>Codice</th>
+				<th>Nome Articolo</th>
+				<th>Offerta massima</th>
+				<th>tempo mancante</th>
+				<th>Link</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="d : ${dettAstArtcliAprt}">
+				<td th:text="${d.codice}"></td>
+				<td th:text="${d.nome}"></td>
+				<td><span th:text="${#numbers.formatDecimal(d.prezzoAggiudica, 0, 'COMMA', 2, 'POINT')}"></span> €</td>				
+				<td th:text="${ d.tempoMancante }"></td>
+				<td><a th:href="@{/GetDettaglioAsta(idAsta=${d.idAsta})}">Dettagli Asta</a></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+		
+		
+		
+		<h2>ASTE CHIUSE</h2>
+	<div>
+	<table class="tableArrangement">
+		<thead>
+			<tr>
+				<th>Codice</th>
+				<th>Nome Articolo</th>
+				<th>Prezzo Aggiudica</th>
+				<th>Link</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="d : ${dettAstArtcliCs}">
+				<td th:text="${d.codice}"></td>
+				<td th:text="${ d.nome }"></td>
+				<td><span th:text="${#numbers.formatDecimal(d.prezzoAggiudica, 0, 'COMMA', 2, 'POINT')}"></span> €</td>				
+				<td><a th:href="@{/GetDettaglioAsta(idAsta=${d.idAsta})}">Dettagli Asta</a></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+
+		<p>Inserisci dettagli per creare una nuova asta</p>
+		
+		<form action="#" th:action="@{/NuovaAsta}" method="POST" enctype="multipart/form-data">
+			<fieldset style="width:500px">
+				<p>
+					nome Articolo: <input type="text" name="nome" maxlength="45"  required />
+				</p>
+				<p>
+					Descrizione: <input type="text" name="descrizione" maxlength="45"  required />
+				</p>
+				<p>
+					Prezzo iniziale: <input type="number" min="0" name="prezzoIniziale" required />
+				</p>
+				<p>
+					Rialzo Minimo: <input type="number" min="0" name="rialzoMinimo" required />
+				</p>
+				<p>
+				scadenza: <input type="datetime-local" name="scadenza" 
+					
+					placeholder="yyyy-mm-dd HH:mm" min="2022-02-21T09:54" required />
+					
+				</p>
+				<p>
+				<input type =file name="image" accept="image/*"/><br>
+				</p>			
+				<input type="submit" name="Nuova Asta">
+			 </fieldset>
+		 </form>
+	
+</body>
+</html>

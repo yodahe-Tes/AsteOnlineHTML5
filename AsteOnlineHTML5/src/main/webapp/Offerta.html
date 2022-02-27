@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-15">
+<title>OFFERTA</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+
+	<div >
+		<a th:href="@{/Home}">Homepage</a>    <a th:href="@{/GetAcquisto}">Acquisto</a>
+	</div>
+	
+	<h1>OFFERTA</h1>
+	
+	
+	<div >
+	<h2>Dettaglio Articolo</h2>
+	<table class="tableArrangement">
+		<thead>
+			<tr>
+				<th>Codice             </th>
+				<th>Nome Articolo      </th>
+				<th>Prezzo Iniziale    </th>
+				<th>Rialzo Minimo      </th>
+				<th>Scadenza     </th>
+				<th>Immagine     </th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="d : ${detAsta}">
+				<td th:text="${d.codice}"></td>
+				<td th:text="${d.nome}"></td>
+				<td><span th:text="${#numbers.formatDecimal(d.prezzoIniziale, 0, 'COMMA', 2, 'POINT')}"></span> €</td>
+				<td><span th:text="${#numbers.formatDecimal(d.rialzoMinimo, 0, 'COMMA', 2, 'POINT')}"></span> €</td>
+				<td th:text="${#dates.format(d.scadenza, 'yyyy-MM-dd HH:mm')}"></td>  					
+				
+				<td ><img th:src="${'data:image/jpeg;base64,' + detAsta.image}" width="100"  height="100"/>
+				</td>
+			
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	
+	<div>
+	<h2>Elenco Offerte</h2>
+	<table class="tableArrangement">
+		<thead>
+			<tr>
+				<th>id Offerente</th>
+				<th>Prezzo Offerto</th>
+				<th>Data Ora Offerta  </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="o : ${offerte}">
+				<td th:text="${o.idOfferente}"></td>
+				<td><span th:text="${#numbers.formatDecimal(o.ammontareOfferta, 0, 'COMMA', 2, 'POINT')}"></span> €</td>
+				<td th:text="${#dates.format(o.dataOraOfferta, 'yyyy-MM-dd HH:mm')}"></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+		
+	<div th:if="${detAsta.scadenza} > ${currTime}">
+	<form th:action="@{/FaiOfferta}" method="POST">
+			<input type="hidden" name="idAsta" th:value="${detAsta.idAsta}">
+			<input type="hidden" name="rialzoMinimo" th:value="${detAsta.rialzoMinimo}">
+	
+			
+			<fieldset>
+				<p>
+					Fai Offerta: <input type="number" name="ammontareOfferta" min="0" step="0.01" required />
+				</p>
+			
+				
+			<button type="submit" name="action" value="FaiOfferta">Fai Offerta</button>
+		</fieldset>
+		</form>
+	</div>
+	
+</body>
+</html>

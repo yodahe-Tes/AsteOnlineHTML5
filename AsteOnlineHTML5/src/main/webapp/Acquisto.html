@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-15">
+<title>Acquisto</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+
+	<div >
+		<a th:href="@{/Home}">Homepage</a> 	</div><div align="right"><a th:href="@{/Logout}">Logout</a>
+	</div>
+
+<body>
+	<div>
+		<form action="#" th:action="@{/GetAcquisto}" method="GET" >
+			<fieldset style="width:500px">
+				<p>
+					cerca articolo: <input type="text" name="parola" required  maxlength="45" />
+				</p>
+				<input type="submit" name="Cerca">
+			 </fieldset>
+		 </form>
+		 
+	</div>
+	
+	<h2>ASTE APERTE</h2>
+	<div>
+	<table class="tableArrangement">
+		<thead>
+			<tr>
+				<th>Codice            </th>
+				<th>Nome              </th>
+				<th>Scadenza          </th>
+				<th>Link              </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="d : ${dettAstAprt}"   >
+				<td th:text="${d.codice}"      ></td>
+				<td th:text="${d.nome}"        ></td>
+				<td th:text="${#dates.format(d.scadenza, 'yyyy-MM-dd HH:mm')}"></td>
+				<td><a th:href="@{/GetOfferta(idAsta=${d.idAsta})}">Lista offerte</a></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	</div>
+
+	<h2>ASTE AGGIUDICATE</h2>
+		
+	<div>
+	<table class="tableArrangement">
+		<thead>
+			<tr>
+				<th>Codice</th>
+				<th>Nome</th>
+				<th>Descrizione</th>
+				<th>Prezzo</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="d : ${dettAstCs}">
+				<td th:text="${d.codice}"></td>
+				<td th:text="${ d.nome }"></td>
+				<td th:text="${ d.descrizione }"></td>
+				<td><span th:text="${#numbers.formatDecimal(d.prezzoAggiudica, 0, 'COMMA', 2, 'POINT')}"></span> €</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	
+</body>
+</html>
