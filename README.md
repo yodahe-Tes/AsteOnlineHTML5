@@ -32,6 +32,3 @@ IDE used : ECLIPSE
 ![Screenshot (28)](https://user-images.githubusercontent.com/61747783/156007319-6edcdb0d-dd6e-4851-acc7-512b0ebd7d90.png)
 
 A document with all the Database and Application Design processes and sequence diagrams is also included in the repository.
-=======
-# AsteOnlineHTML5
->>>>>>> refs/remotes/origin/main
