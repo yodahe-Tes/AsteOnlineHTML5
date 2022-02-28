@@ -37,6 +37,7 @@ public class FaiOfferta extends HttpServlet {
 
 	public void init() throws ServletException {
 		connection = ConnectionHandler.getConnection(getServletContext());
+		
 	}
 
 
